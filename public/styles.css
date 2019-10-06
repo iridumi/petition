@@ -1,0 +1,12 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    border: 3px solid black;
+    background-color: goldenrod;
+}
+
+canvas {
+    border: 3px dashed red;
+}
