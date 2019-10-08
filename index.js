@@ -62,29 +62,55 @@ app.post("/petition", (req, res) => {
     let first = req.body.first;
     let last = req.body.last;
     let sig = req.body.signature;
-    //console.log(req.body.signature);
-    //console.log(first, last, sig);
-    db.addSignature(first, last, sig)
-        .then(id => {
-            console.log(id.rows[0].id);
-            req.session.sigId = id.rows[0].id;
-            res.redirect("/thanks");
-        })
-        .catch(() => {
-            res.render("petition", { error: true });
-        });
+    let id =
+        //console.log(req.body.signature);
+        //console.log(first, last, sig);
+        db
+            .addSignature(first, last, sig)
+            .then(id => {
+                //    console.log(id.rows[0].id);
+                req.session.sigId = id.rows[0].id;
+                res.redirect("/thanks");
+            })
+            .catch(() => {
+                res.render("petition", { error: true });
+            });
 });
 
-app.get(
-    "/thanks",
-    (req, res) => {
-        // db.getNumber().then(count => {
-        //     console.log("this is the number of signers: ", count);
-        res.render("thanks");
-        //});
-    }
-    //res.render("thanks");
-);
+app.get("/thanks", (req, res) => {
+    let cookieId = req.session.sigId;
+    Promise.all([
+        db.getNumber().then(result => {
+            // console.log(
+            //     "this is the number of signers: ",
+            //     result.rows[0].count
+            // );
+            return result;
+        }),
+        db.getId(cookieId).then(thanks => {
+            //console.log(thanks.rows[0].signature);
+            return thanks;
+        })
+    ]).then(info => {
+        const [result, thanks] = info;
+        res.render("thanks", {
+            count: result.rows[0].count,
+            sig: thanks.rows[0].signature,
+            first: thanks.rows[0].first
+        });
+    });
+
+    // }) => {
+    //
+    // });
+
+    //
+    //     res.render("thanks", { count: result.rows[0].count });
+    // });
+    //
+    //     res.render("thanks", { sig: thanks.rows[0].signature });
+    // });
+});
 
 app.get("/signers", (req, res) => {
     //db.getNames().then((first, last) => {

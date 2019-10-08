@@ -16,12 +16,12 @@ module.exports.getNames = () => {
 };
 
 module.exports.getNumber = () => {
-    return db.query("SELECT COUNT(*) AS count FROM signatures");
+    return db.query("SELECT COUNT(*) FROM signatures");
 };
 
 // Monday 7.10
-module.exports.getId = id => {
+module.exports.getId = signId => {
     return db.query(`SELECT first, signature FROM signatures WHERE id = $1`, [
-        id
+        signId
     ]);
 };
