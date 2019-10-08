@@ -10,10 +10,10 @@ h2 {
     color: silver;
 }
 
-/* header {
+header {
     height: 100px;
     background-color: white;
-} */
+}
 
 body {
     border: 3px solid black;
@@ -32,15 +32,25 @@ form {
     flex-wrap: wrap;
 }
 
-/* .signers {
+.signers {
+    border: 2px dashed red;
     padding: 10px;
-} */
+    margin: 20px;
+}
 
 canvas {
     border: 3px dashed black;
     align-self: center;
+    margin-top: 20px;
     /* margin: auto; */
 }
+
+/* .signers-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+} */
 
 #submit {
     align-self: center;
@@ -51,7 +61,7 @@ canvas {
     padding: 20px;
 }
 
-/* footer {
+footer {
     height: 80px;
     background-color: white;
-} */
+}
