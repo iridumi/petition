@@ -1,12 +1,57 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    /* overflow: hidden; */
 }
+
+h2 {
+    text-align: center;
+    padding-bottom: 100px;
+    color: silver;
+}
+
+/* header {
+    height: 100px;
+    background-color: white;
+} */
 
 body {
     border: 3px solid black;
-    background-color: goldenrod;
+    background-color: ivory;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-canvas {
-    border: 3px dashed red;
+form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
+
+/* .signers {
+    padding: 10px;
+} */
+
+canvas {
+    border: 3px dashed black;
+    align-self: center;
+    /* margin: auto; */
+}
+
+#submit {
+    align-self: center;
+    margin: 10px;
+}
+
+.thanks {
+    padding: 20px;
+}
+
+/* footer {
+    height: 80px;
+    background-color: white;
+} */

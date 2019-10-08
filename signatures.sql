@@ -5,8 +5,7 @@ CREATE TABLE signatures(
     first VARCHAR(200) NOT NULL CHECK (first != ''),
     last VARCHAR(200) NOT NULL CHECK (last != ''),
     signature TEXT NOT NULL
+    -- user_id INT REFERENCES users(id)
 );
-
-INSERT INTO signatures (first, last, signature) VALUES ('Irina', 'Dumitriu', 'abcdefg');
 
 SELECT * FROM signatures;
