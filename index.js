@@ -49,7 +49,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/petition", (req, res) => {
-    if (req.session.Id) {
+    if (req.session.sigId) {
         res.redirect("/thanks");
     } else {
         res.render("petition");
@@ -60,9 +60,10 @@ app.post("/petition", (req, res) => {
     let first = req.body.first;
     let last = req.body.last;
     let sig = req.body.signature;
+    let userId = req.body.user_id;
     //let user = req.body.user_id;
     //console.log(first, last, sig);
-    db.addSignature(first, last, sig)
+    db.addSignature(first, last, sig, userId)
         .then(id => {
             req.session.sigId = id.rows[0].id;
             res.redirect("/thanks");
@@ -75,22 +76,22 @@ app.post("/petition", (req, res) => {
 app.get("/thanks", (req, res) => {
     let cookieId = req.session.sigId;
     Promise.all([
-        db.getNumber().then(result => {
-            return result;
+        db.getNumber().then(numbers => {
+            return numbers;
         }),
         db.getId(cookieId).then(thanks => {
             return thanks;
         })
     ])
         .then(info => {
-            const [result, thanks] = info;
+            const [numbers, thanks] = info;
             res.render("thanks", {
-                count: result.rows[0].count,
+                count: numbers.rows[0].count,
                 sig: thanks.rows[0].signature,
                 first: thanks.rows[0].first
             });
         })
-        .catch(err => console.log(err));
+        .catch(error => console.log(error));
 });
 
 app.get("/signers", (req, res) => {
@@ -109,31 +110,42 @@ app.get("/signers", (req, res) => {
 ///////// Tuesday 08.10.2019 - Login & Registration //////////
 
 app.get("/register", (req, res) => {
-    console.log("a get req is happening");
+    console.log("a get req is happening on registration");
     res.render("register");
 });
 
 app.post("/register", (req, res) => {
-    console.log("post request!!!");
-    let { first, last, email, password } = req.body;
+    console.log("post request on register!!!");
+    let first = req.body.first;
+    let last = req.body.last;
+    let email = req.body.email;
+    let password = req.body.password;
+    //let { first, last, email, password } = req.body;
+    //let password = req.body.password;
     console.log(req.body.password);
-    hash(password)
-        .then(result => {
-            password = result;
-            console.log(password);
-            return password;
-        })
-        .then(password => {
-            db.addUser(first, last, email, password).then(userId => {
-                req.session.userId = userId.rows[0].id;
-                res.redirect("/petition");
-            });
+    bcrypt.hash(password).then(() => {
+        console.log(password);
+        db.addUser(first, last, email, password).then(userId => {
+            console.log(userId);
+            req.session.userId = userId.rows[0].id;
+            res.redirect("/petition");
         });
+    });
 });
 
 app.get("/login", (req, res) => {
-    console.log("a get req is happening");
+    console.log("a get req is happening on login");
     res.render("login");
+});
+
+app.post("/login", (req, res) => {
+    console.log("post request on log in!!!");
+    let email = req.body.email;
+    let typedPswd = req.body.password;
+    let savedPswd;
+    db.getHashPassword(email).then(result => {
+        console.log(result);
+    });
 });
 
 app.get("/logout", (req, res) => {
@@ -142,9 +154,11 @@ app.get("/logout", (req, res) => {
     res.send(`You logged out`);
 });
 
-app.get("*", (req, res) => {
-    req.session.cohort = "coriander";
-    res.redirect("/");
-});
+// app.get("*", (req, res) => {
+//     req.session.cohort = "coriander";
+//     res.redirect("/");
+// });
 
-app.listen(8080, () => console.log("petition server running"));
+app.listen(process.env.PORT || 8080, () =>
+    console.log("petition server is running")
+);

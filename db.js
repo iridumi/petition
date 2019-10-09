@@ -1,13 +1,16 @@
 const spicedPg = require("spiced-pg");
 
-const db = spicedPg(`postgres:postgres:postgres@localhost:5432/petition`);
+const db = spicedPg(
+    process.env.DATABASE_URL ||
+        `postgres:postgres:postgres@localhost:5432/petition`
+);
 
-module.exports.addSignature = (first, last, signature) => {
+module.exports.addSignature = (first, last, signature, user_id) => {
     return db.query(
-        `INSERT INTO signatures (first, last, signature)
+        `INSERT INTO signatures (first, last, signature, user_id)
         VALUES ($1, $2, $3)
-        RETURNING id`, //  Monday 7.10
-        [first, last, signature]
+        RETURNING id`,
+        [first, last, signature, user_id]
     );
 };
 
@@ -34,4 +37,8 @@ module.exports.addUser = (first, last, email, password) => {
         RETURNING id`,
         [first, last, email, password]
     );
+};
+
+module.exports.getHashPassword = email => {
+    return db.query(`SELECT password FROM users WHERE email = $1`, [email]);
 };
