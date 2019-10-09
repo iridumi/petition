@@ -2,9 +2,17 @@
     <div class ="error"> <p>Oops! something went wrong</p></div>
 {{/if}}
 
-<form class="" action="index.html" method="post">
-    <input type="text" name="user" value="" placeholder="user">
-    <input type="text" name="password" value="" placeholder="password">
+<form class="loggingin" method="POST">
 
-    <button type="button" name="button">Enter</button>
+    <div class="login-container">
+        <input type="text" name="email" value="" placeholder="email address">
+        <input type="text" name="password" value="" placeholder="password">
+    </div>
+
+    <input name="_csrf" value="{{csrfToken}}" type="hidden">
+
+    <div class="login">
+        <button name="loginBtn">Log In</button>
+    </div>
+
 </form>
