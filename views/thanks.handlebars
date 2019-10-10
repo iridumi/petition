@@ -8,4 +8,9 @@
         <h3>See all {{count}} <a href="/signers">signers.</a></h3>
     </div>
 
+    <form action="/signature/delete" method="POST">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <button>Delete Signature</button>
+    </form>
+
 </div>
