@@ -1,17 +1,19 @@
 {{#if error}}
-    <div class ="error"> <p>Oops! something went wrong</p></div>
+    <div class ="error"> <h3>Oops! something went wrong</h3></div>
 {{/if}}
 
 <form class="loggingin" method="POST">
 
-    <div class="login-container">
+    <div class="input">
         <input type="text" name="email" value="" placeholder="email address">
+    </div>
+    <div class="input">
         <input type="text" name="password" value="" placeholder="password">
     </div>
 
     <input name="_csrf" value="{{csrfToken}}" type="hidden">
 
-    <div class="login">
+    <div class="btn">
         <button name="loginBtn">Log In</button>
     </div>
 

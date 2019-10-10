@@ -1,9 +1,21 @@
-<h2>Thank you for registering! Please tell us a few things about you (if you wish...)</h2>
+<h2>Thank you for registering! Please tell us a few things about yourself</h2>
 
 <form class="profile" method="post">
-    <input name="age" value="" placeholder="age">
-    <input name="city" value="" placeholder="city">
-    <input name="url" value="" placeholder="website">
-    <input name="_csrf" value="{{csrfToken}}" type="hidden">
-    <button name="button">Go on to the petition</button>
+    
+    <div class="input">
+        <input name="age" value="" placeholder="age">
+    </div>
+    <div class="input">
+        <input name="city" value="" placeholder="city">
+    </div>
+    <div class="input">
+        <input name="url" value="" placeholder="homepage">
+    </div>
+    <div class="input">
+        <input name="_csrf" value="{{csrfToken}}" type="hidden">
+    </div>
+    <div class="btn">
+        <button name="button">Sign the petition</button>
+    </div>
+
 </form>

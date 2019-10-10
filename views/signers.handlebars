@@ -3,7 +3,14 @@
     <div class="signers">
 
         {{#rows}}
-            <h3 class="signer">{{first}} {{last}}</li>
+            <!-- <h3 class="signer">{{first}} {{last}}</h3> -->
+            <h3 class="signer">
+                {{#if url}}
+                    <a href={{url}}>{{first}} {{last}}</a> {{age}} <a href="/signers/{{city}}">{{city}}</a>
+                {{else}}
+                    {{first}} {{last}}</a> {{age}} <a href="/signers/{{city}}">{{city}}</a>
+                {{/if}}
+            </h3>
         {{/rows}}
 
     </div>

@@ -32,85 +32,12 @@ app.use((req, res, next) => {
     next();
 });
 
-// app.use(function(req, res, next) {
-//     next();
-// });
-
 app.get("/", (req, res) => {
-    res.redirect("/petition");
+    res.redirect("/register");
 });
-
-app.get("/petition", (req, res) => {
-    if (req.session.sigId) {
-        res.redirect("/thanks");
-    } else {
-        res.render("petition");
-    }
-});
-
-app.post("/petition", (req, res) => {
-    let first = req.body.first;
-    let last = req.body.last;
-    let sig = req.body.signature;
-    let userId = req.body.user_id;
-    console.log(userId);
-
-    db.addSignature(first, last, sig, userId)
-        .then(id => {
-            req.session.sigId = id.rows[0].id;
-            console.log(req.session.sigId);
-            res.redirect("/thanks");
-        })
-        .catch(() => {
-            res.render("petition", { error: true });
-        });
-});
-
-app.get("/thanks", (req, res) => {
-    let sigCookieId = req.session.sigId;
-    console.log(sigCookieId);
-    if (!sigCookieId) {
-        res.redirect("/petition");
-    } else {
-        Promise.all([
-            db.getNumber().then(numbers => {
-                return numbers;
-            }),
-            db.getId(sigCookieId).then(thanks => {
-                return thanks;
-            })
-        ])
-            .then(info => {
-                const [numbers, thanks] = info;
-                res.render("thanks", {
-                    count: numbers.rows[0].count,
-                    sig: thanks.rows[0].signature,
-                    first: thanks.rows[0].first
-                });
-            })
-            .catch(error => console.log(error));
-    }
-});
-
-app.get("/signers", (req, res) => {
-    db.getNames().then(({ rows }) => {
-        res.render("signers", { rows });
-    });
-});
-
-///////// Monday 07.10.2019 /////////
-// app.get("/test", (req, res) => {
-//     req.session.sigId = 10;
-//     //    console.log("req.session in /test before redirect: ", req.session);
-//     res.redirect("/");
-// });
 
 app.get("/register", (req, res) => {
     res.render("register");
-});
-
-app.get("/profile", (req, res) => {
-    res.render("profile");
 });
 
 app.post("/register", (req, res) => {
@@ -124,13 +51,33 @@ app.post("/register", (req, res) => {
         .then(hash => {
             db.addUser(first, last, email, hash).then(newUser => {
                 req.session.userId = newUser.rows[0].id;
-                //res.redirect("/petition");
                 res.redirect("/profile");
             });
         })
         .catch(() => {
             res.render("register", { error: true });
         });
+});
+
+app.get("/profile", (req, res) => {
+    res.render("profile");
+});
+
+app.post("/profile", (req, res) => {
+    console.log("post request is happening on profile");
+    let age = req.body.age;
+    let city = req.body.city;
+    let url = req.body.url;
+    let user_id = req.session.userId;
+
+    if (age || city || url) {
+        db.addProfile(age, city, url, user_id).then(result => {
+            req.session.profileId = result.rows[0].id;
+            res.redirect("/petition");
+        });
+    } else {
+        res.redirect("/petition");
+    }
 });
 
 app.get("/login", (req, res) => {
@@ -147,33 +94,118 @@ app.post("/login", (req, res) => {
     let savedPswd;
     db.getHashPassword(email)
         .then(result => {
-            //console.log(result);
             savedPswd = result.rows[0].password;
-            //req.session.userId = result.rows[0].id;
             return savedPswd;
         })
         .then(savedPswd => {
             return bcrypt.compare(typedPswd, savedPswd);
         })
         .then(isMatch => {
-            //console.log(isMatch);
             if (isMatch) {
                 db.getLoginUserId(email).then(loginId => {
-                    //console.log(loginId); // ???????????
                     req.session.userId = loginId.rows[0].id;
-                    //console.log(req.session.userId);
                     return res.redirect("/petition");
                 });
             } else {
                 return res.render("login", { error: true });
             }
+        })
+        .catch(error => {
+            console.log(error);
+            return res.render("login", { error: true });
+        });
+});
+
+app.get("/petition", (req, res) => {
+    if (req.session.sigId) {
+        res.redirect("/thanks");
+    } else if (req.session.userId) {
+        db.sigCheck(req.session.userId)
+            .then(({ rows }) => {
+                if (rows[0]) {
+                    res.redirect("/thanks");
+                } else {
+                    res.render("petition");
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    } else {
+        res.redirect("/register");
+    }
+});
+
+app.post("/petition", (req, res) => {
+    let sig = req.body.signature;
+    let userId = req.session.userId;
+
+    if (!sig) {
+        return res.render("petition", { error: true });
+    } else {
+        db.addSignature(sig, userId)
+            .then(id => {
+                req.session.sigId = id.rows[0].id;
+                res.redirect("/thanks");
+            })
+            .catch(() => {
+                res.render("petition", { error: true });
+            });
+    }
+});
+
+app.get("/thanks", (req, res) => {
+    let sigCookieId = req.session.sigId;
+
+    if (!sigCookieId) {
+        res.redirect("/petition");
+    } else {
+        Promise.all([
+            db.getNumber().then(numbers => {
+                console.log(numbers);
+                return numbers;
+            }),
+            db.getSignature(sigCookieId).then(thanks => {
+                console.log(thanks);
+                return thanks;
+            })
+        ])
+            .then(info => {
+                const [numbers, thanks] = info;
+                res.render("thanks", {
+                    count: numbers.rows[0].count,
+                    sig: thanks.rows[0].signature,
+                    first: thanks.rows[0].first
+                });
+            })
+            .catch(error => console.log(error));
+    }
+});
+
+app.get("/signers", (req, res) => {
+    db.getSigners()
+        .then(({ rows }) => {
+            res.render("signers", { rows });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+});
+
+app.get("/signers/:city", (req, res) => {
+    let { city } = req.params;
+    db.getSignersCity(city)
+        .then(({ rows }) => {
+            res.render("signers", { rows });
+        })
+        .catch(err => {
+            console.log(err);
         });
 });
 
 app.get("/logout", (req, res) => {
     req.session = null;
-    //    req.session.sigId = null // for a single cookie
-    res.send(`You logged out`);
+    res.redirect("/register");
 });
 
 app.listen(process.env.PORT || 8080, () =>

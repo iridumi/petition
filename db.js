@@ -5,27 +5,17 @@ const db = spicedPg(
         `postgres:postgres:postgres@localhost:5432/petition`
 );
 
-module.exports.addSignature = (first, last, signature, user_id) => {
+module.exports.addSignature = (signature, user_id) => {
     return db.query(
-        `INSERT INTO signatures (first, last, signature, user_id)
-        VALUES ($1, $2, $3, $4)
+        `INSERT INTO signatures (signature, user_id)
+        VALUES ($1, $2)
         RETURNING id`,
-        [first, last, signature, user_id]
+        [signature, user_id]
     );
-};
-
-module.exports.getNames = () => {
-    return db.query("SELECT first AS first, last AS last FROM signatures");
 };
 
 module.exports.getNumber = () => {
     return db.query("SELECT COUNT(*) FROM signatures");
-};
-
-module.exports.getId = signId => {
-    return db.query(`SELECT first, signature FROM signatures WHERE id = $1`, [
-        signId
-    ]);
 };
 
 module.exports.addUser = (first, last, email, password) => {
@@ -43,4 +33,55 @@ module.exports.getHashPassword = email => {
 
 module.exports.getLoginUserId = loginId => {
     return db.query(`SELECT id FROM users WHERE email = $1`, [loginId]);
+};
+
+module.exports.addProfile = (age, city, url, user_id) => {
+    return db.query(
+        `INSERT INTO user_profiles (age, city, url, user_id)
+        VALUES ($1, $2, $3, $4)
+        RETURNING id`,
+        [age || null, city, url, user_id]
+    );
+};
+
+module.exports.getSignature = signId => {
+    return db.query(
+        `SELECT signature, first
+        FROM signatures
+        JOIN users
+        ON users.id = signatures.user_id
+        WHERE signatures.id = $1
+        `,
+        [signId]
+    );
+};
+
+module.exports.getSigners = () => {
+    return db.query(
+        `SELECT first, last, age, city, url
+        FROM signatures
+        JOIN users
+        ON users.id = signatures.user_id
+        JOIN user_profiles
+        ON users.id = user_profiles.user_id
+        `
+    );
+};
+
+module.exports.sigCheck = id => {
+    return db.query("SELECT user_id FROM signatures WHERE user_id = $1", [id]);
+};
+
+module.exports.getSignersCity = city => {
+    return db.query(
+        `SELECT first, last, age, city, url
+        FROM signatures
+        JOIN users
+        ON users.id = signatures.user_id
+        JOIN user_profiles
+        ON users.id = user_profiles.user_id
+        WHERE LOWER(city) = LOWER($1)
+         `,
+        [city]
+    );
 };

@@ -1,21 +1,25 @@
 {{#if error}}
-    <div class ="error"> <p>Oops! something went wrong</p></div>
+    <div class ="error"> <h3>Oops! something went wrong</h3></div>
 {{/if}}
 
 <form class="registration" method="POST">
 
-    <div class="reg-name">
+    <div class="input">
         <input type="text" name="first" value="" placeholder="first name">
+    </div>
+    <div class="input">
         <input type="text" name="last" value="" placeholder="last name">
     </div>
-    <div class="reg-data">
+    <div class="input">
         <input type="text" name="email" value="" placeholder="email address">
+    </div>
+    <div class="input">
         <input type="text" name="password" value="" placeholder="password">
     </div>
 
     <input name="_csrf" value="{{csrfToken}}" type="hidden">
 
-    <div class="register">
+    <div class="btn">
         <button name="regBtn">Register</button>
     </div>
 

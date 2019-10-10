@@ -37,10 +37,11 @@ function draw(c, xInit, yInit, xFin, yFin) {
     c.lineTo(xFin, yFin);
     c.stroke();
     c.closePath();
+    hidden.value = canvas.toDataURL();
 }
 
-submit.addEventListener("click", () => {
-    hidden.value = canvas.toDataURL();
-    //console.log(hidden.value);
-});
+// submit.addEventListener("click", () => {
+//     hidden.value = canvas.toDataURL();
+//     //console.log(hidden.value);
+// });
 //})();
