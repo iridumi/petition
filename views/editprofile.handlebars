@@ -1,0 +1,31 @@
+<form class="edit" method="post">
+
+    <div class="input">
+        <input type="text" name="first" value="{{first}}">
+    </div>
+    <div class="input">
+        <input type="text" name="last" value="{{last}}">
+    </div>
+    <div class="input">
+        <input type="email" name="email" value="{{email}}">
+    </div>
+    <div class="input">
+        <input type="password" name="password" value="">
+    </div>
+    <div class="input">
+        <input type="number" name="age" value="{{age}}">
+    </div>
+    <div class="input">
+        <input type="text" name="city" value="{{city}}">
+    </div>
+    <div class="input">
+        <input type="url" name="url" value="{{url}}">
+    </div>
+
+    <input name="_csrf" value="{{csrfToken}}" type="hidden">
+
+    <div class="btn">
+        <button name="regBtn">Update</button>
+    </div>
+
+</form>

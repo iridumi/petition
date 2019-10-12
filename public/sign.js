@@ -1,6 +1,6 @@
 //(function signPetition() {
 let canvas = document.getElementById("canvas");
-let submit = document.querySelector("#submit");
+//let submit = document.querySelector("#submit");
 let hidden = document.getElementById("hidden");
 let c = canvas.getContext("2d");
 let signing = false;
