@@ -57,6 +57,18 @@ footer {
     border-radius: 40px;
 }
 
+.guapetonaBis {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    flex: auto;
+    background-color: rgb(255, 250, 250, 0.7);
+    padding: 10px;
+    border-radius: 40px;
+}
+
 .moving {
     align-self: flex-end;
     margin: 20px;
