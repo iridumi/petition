@@ -1,15 +1,20 @@
-<h2>Thank you for registering! Please tell us a few things about yourself</h2>
+<div class="logout">
+    <h3><a href="/logout">Log Out</a></h3>
+</div>
 
-<form class="profile" method="post">
+<form class="guapa" method="post">
+    <div class="chat">
+        <h3>Thank you for registering! Now please tell us a few more things about yourself (if you wish...)</h3>
+    </div>
 
     <div class="input">
-        <input name="age" value="" placeholder="age">
+        <input name="age" value="" placeholder="Age" autocomplete="off">
     </div>
     <div class="input">
-        <input name="city" value="" placeholder="city">
+        <input name="city" value="" placeholder="City" autocomplete="off">
     </div>
     <div class="input">
-        <input name="url" type="url" value="" placeholder="homepage">
+        <input name="url" type="url" value="" placeholder="Homepage" autocomplete="off">
     </div>
     <div class="input">
         <input name="_csrf" value="{{csrfToken}}" type="hidden">

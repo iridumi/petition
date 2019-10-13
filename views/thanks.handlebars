@@ -1,19 +1,28 @@
-<div class="thanks-container">
+<div class="logout">
+    <h3><a href="/logout">Log Out</a></h3>
+</div>
 
-    <div class="thanks">
+<div class="guapetona">
+
+    <!-- <div class="thanks"> -->
         <h1>Thank you {{first}} for your support!</h1>
         <img src="{{sig}}"/>
-    </div>
-    <div class="thankyou-links">
-        <h3>See all {{count}} <a href="/signers">signers.</a></h3>
-    </div>
+    <!-- </div>
+    <div class="thankyou-links"> -->
+        <h3>See all {{count}} <a href="/signers">signers</a></h3>
+    <!-- </div> -->
 
     <form action="/signature/delete" method="POST">
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-    <div class="btn">
-        <button>Delete Signature</button>
-    </div>
+        <div class="deleteBtn">
+            <button>Delete your signature</button>
+        </div>
     </form>
+
+    <div class="">
+        <h3><a href="/profile/edit">Edit your profile</a></h3>
+    </div>
+
 
 </div>

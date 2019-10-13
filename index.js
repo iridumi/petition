@@ -65,10 +65,14 @@ app.post("/register", (req, res) => {
     bcrypt
         .hash(password)
         .then(hash => {
-            db.addUser(first, last, email, hash).then(newUser => {
-                req.session.userId = newUser.rows[0].id;
-                res.redirect("/profile");
-            });
+            db.addUser(first, last, email, hash)
+                .then(newUser => {
+                    req.session.userId = newUser.rows[0].id;
+                    res.redirect("/profile");
+                })
+                .catch(() => {
+                    return res.render("register", { error: true });
+                });
         })
         .catch(() => {
             res.render("register", { error: true });
@@ -86,10 +90,19 @@ app.post("/profile", (req, res) => {
     let user_id = req.session.userId;
 
     if (age || city || url) {
-        db.addProfile(age, city, url, user_id).then(result => {
-            req.session.profileId = result.rows[0].id;
-            res.redirect("/petition");
-        });
+        if (
+            url != "" &&
+            !url.startsWith("http://") &&
+            !url.startsWith("https://") &&
+            !url.startsWith("//")
+        ) {
+            res.render("profile", { error: true });
+        } else {
+            db.addProfile(age, city, url, user_id).then(result => {
+                req.session.profileId = result.rows[0].id;
+                res.redirect("/petition");
+            });
+        }
     } else {
         res.redirect("/petition");
     }
@@ -110,7 +123,6 @@ app.post("/login", (req, res) => {
 
     db.getHashPassword(email)
         .then(result => {
-            console.log(result);
             savedPswd = result.rows[0].password;
             return savedPswd;
         })
@@ -142,7 +154,6 @@ app.post("/signature/delete", (req, res) => {
 
 app.get("/profile/edit", (req, res) => {
     db.showProfile(req.session.userId).then(result => {
-        console.log(result);
         res.render(
             "editprofile",
             {
@@ -269,7 +280,11 @@ app.get("/thanks", (req, res) => {
                 first: thanks.rows[0].first
             });
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+            res.render("petition", { error: true });
+        });
+
     //}
 });
 
@@ -328,7 +343,22 @@ app.get("/logout", (req, res) => {
     res.redirect("/register");
 });
 
-//===================== notes Friday 11.10
+app.post("/delete/account", (req, res) => {
+    db.delSignature(req.session.userId)
+        .then(() => {
+            req.session.sigId = null;
+        })
+        .then(() => {
+            db.delUserProfile(req.session.userId).then(() => {
+                db.delUser(req.session.userId).then(() => {
+                    req.session = null;
+                    res.redirect("/register");
+                });
+            });
+        });
+});
+
+//===================== notes Friday 11.10 ===============================
 
 // app.use((req, res, next) {
 //     if (!req.session.userId && req.url !='/register' && req.url != '/login') {

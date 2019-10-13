@@ -1,20 +1,28 @@
-{{#if error}}
-    <div class ="error"> <h3>Oops! something went wrong</h3></div>
-{{/if}}
+<div class="moving">
+    <h3>Already registered? Please <a href="/login">log in</a>.</h3>
+</div>
 
-<form class="registration" method="POST">
+
+<form class="guapa" method="POST">
+    <div class="chat">
+        <h3>Would you like to support our cause? Then please register</h3>
+    </div>
+
+    {{#if error}}
+        <div class ="error"> <h3>Oops! something went wrong</h3></div>
+    {{/if}}
 
     <div class="input">
-        <input type="text" name="first" value="" placeholder="first name">
+        <input type="text" name="first" value="" placeholder="First Name" autocomplete="off">
     </div>
     <div class="input">
-        <input type="text" name="last" value="" placeholder="last name">
+        <input type="text" name="last" value="" placeholder="Last Name" autocomplete="off">
     </div>
     <div class="input">
-        <input type="text" name="email" value="" placeholder="email address">
+        <input type="text" name="email" value="" placeholder="Email Address" autocomplete="off">
     </div>
     <div class="input">
-        <input type="text" name="password" value="" placeholder="password">
+        <input type="password" name="password" value="" placeholder="Password" autocomplete="off">
     </div>
 
     <input name="_csrf" value="{{csrfToken}}" type="hidden">

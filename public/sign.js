@@ -31,8 +31,8 @@ document.addEventListener("mouseup", function(e) {
 
 function draw(c, xInit, yInit, xFin, yFin) {
     c.beginPath();
-    c.strokeStyle = "black";
-    c.lineWidth = 2;
+    c.strokeStyle = "blue";
+    c.lineWidth = 4;
     c.moveTo(xInit, yInit);
     c.lineTo(xFin, yFin);
     c.stroke();

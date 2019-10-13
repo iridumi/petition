@@ -1,11 +1,20 @@
-<form method="POST">
+<div class="logout">
+    <h3><a href="/logout">Log Out</a></h3>
+</div>
+
+<form class="guapa" method="POST">
 
     {{#if error}}
         <div class ="error"> <h3>Oops! something went wrong</h3></div>
     {{/if}}
 
-        <p>Sign Here:</p>
-        <canvas id="canvas" width="600" height="300"></canvas>
+    <div class="petition">
+        <h3>It is well known that music has many health benefits. It makes us happier, more relaxed, more productive. It is soothing and comforting, it helps us focus. So we think it is important that everyone, regardless of their financial situation, gets to experience live music every now and then. It is a mental health issue. For that, we demand that health insurances start covering some of the costs of concert tickets.</h3>
+    </div>
+
+
+        <canvas id="canvas" width="500" height="250"></canvas>
+        <h3 class="sign">Sign Here</h3>
         <input name="signature" type="hidden" id="hidden" value="">
         <input name="_csrf" value="{{csrfToken}}" type="hidden">
 

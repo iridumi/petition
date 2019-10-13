@@ -1,25 +1,38 @@
-<form class="edit" method="post">
+<div class="logout">
+    <h3><a href="/logout">Log Out</a></h3>
+</div>
 
-    <div class="input">
-        <input type="text" name="first" value="{{first}}">
+<form class="delete" action="/delete/account" method="POST">
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
+    <div class="deleteBtn">
+        <button>Delete Your Account</button>
     </div>
-    <div class="input">
-        <input type="text" name="last" value="{{last}}">
+</form>
+
+
+<form class="guapa" method="post">
+
+    <div class="input2">
+        <input type="text" name="first" value="{{first}}" placeholder="First Name" autocomplete="off">
     </div>
-    <div class="input">
-        <input type="email" name="email" value="{{email}}">
+    <div class="input2">
+        <input type="text" name="last" value="{{last}}" placeholder="Last Name" autocomplete="off">
     </div>
-    <div class="input">
-        <input type="password" name="password" value="">
+    <div class="input2">
+        <input type="email" name="email" value="{{email}}" placeholder="Email Address" autocomplete="off">
     </div>
-    <div class="input">
-        <input type="number" name="age" value="{{age}}">
+    <div class="input2">
+        <input type="password" name="password" value="" placeholder="Password" autocomplete="off">
     </div>
-    <div class="input">
-        <input type="text" name="city" value="{{city}}">
+    <div class="input2">
+        <input type="number" name="age" value="{{age}}" placeholder="Age" autocomplete="off">
     </div>
-    <div class="input">
-        <input type="url" name="url" value="{{url}}">
+    <div class="input2">
+        <input type="text" name="city" value="{{city}}" placeholder="City" autocomplete="off">
+    </div>
+    <div class="input2">
+        <input type="url" name="url" value="{{url}}" placeholder="Homepage" autocomplete="off">
     </div>
 
     <input name="_csrf" value="{{csrfToken}}" type="hidden">

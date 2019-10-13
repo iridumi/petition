@@ -147,3 +147,11 @@ module.exports.editUsers = (first, last, email, user_id) => {
 module.exports.delSignature = id => {
     return db.query("DELETE FROM signatures WHERE user_id = $1", [id]);
 };
+
+module.exports.delUserProfile = id => {
+    return db.query("DELETE FROM user_profiles WHERE user_id = $1", [id]);
+};
+
+module.exports.delUser = id => {
+    return db.query("DELETE FROM users CASCADE WHERE id = $1", [id]);
+};
