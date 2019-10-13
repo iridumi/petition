@@ -67,7 +67,8 @@ footer {
     /* margin: 5px; */
 }
 
-.logout {
+.logout,
+.edit {
     align-self: flex-end;
     margin: 10px;
 }
