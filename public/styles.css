@@ -8,6 +8,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     height: 80px;
     width: 100%;
     /* background-color: rgb(255, 250, 250, 0.5); */
