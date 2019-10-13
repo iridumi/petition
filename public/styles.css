@@ -80,6 +80,7 @@ footer {
 }
 
 .logout,
+.back,
 .edit {
     align-self: flex-end;
     margin: 10px;
@@ -114,6 +115,7 @@ a {
 .chat {
     align-self: center;
     margin: 20px;
+    text-align: center;
 }
 
 .petition {
@@ -137,6 +139,9 @@ button {
     border-radius: 40px;
     align-self: center;
     font-weight: bold;
+    background-color: silver;
+    border: 2px solid grey;
+    /* background: transparent; */
 }
 
 input {

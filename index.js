@@ -318,7 +318,7 @@ app.get("/signers/:city", (req, res) => {
         db.sigCheck(req.session.userId).then(({ rows }) => {
             if (rows[0]) {
                 db.getSignersCity(city).then(({ rows }) => {
-                    res.render("signers", { rows });
+                    res.render("city", { rows, city });
                 });
             } else {
                 res.redirect("/petition");

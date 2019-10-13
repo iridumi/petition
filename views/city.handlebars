@@ -1,0 +1,31 @@
+<div class="logout">
+    <h3><a href="/logout">Log Out</a></h3>
+
+</div>
+
+<div class="edit">
+    <h3><a href="/profile/edit">Edit Your Profile</a></h3>
+</div>
+
+<div class="back">
+    <h3><a href="/signers">Full List</a></h3>
+</div>
+
+
+    <div class="guapetonaBis">
+        <div class="chat">
+            <h2>We the undersigned people of {{city}} demand that health insurances start covering the costs of concert tickets</h2>
+        </div>
+
+        {{#rows}}
+            <!-- <h3 class="signer">{{first}} {{last}}</h3> -->
+            <h3 class="signer">
+                {{#if url}}
+                    <a href={{url}}>{{first}} {{last}}</a> {{age}}
+                {{else}}
+                    {{first}} {{last}} {{age}}
+                {{/if}}
+            </h3>
+        {{/rows}}
+
+    </div>
