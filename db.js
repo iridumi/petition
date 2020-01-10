@@ -31,17 +31,6 @@ module.exports.getHashPassword = email => {
     return db.query(`SELECT password FROM users WHERE email = $1`, [email]);
 };
 
-// module.exports.getLoginUserId = (loginId, sigId) => {
-//     return db.query(
-//         `SELECT user_id
-//         FROM users
-//         LEFT JOIN signatures
-//         ON users.id = signatures.user_id
-//         WHERE email = $1`,
-//         [loginId, sigId]
-//     );
-// };
-
 module.exports.getLoginUserId = loginId => {
     return db.query(
         `SELECT id

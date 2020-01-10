@@ -14,7 +14,7 @@
         <input name="city" value="" placeholder="City" autocomplete="off">
     </div>
     <div class="input">
-        <input name="url" type="url" value="" placeholder="Homepage" autocomplete="off">
+        <input name="url" type="url" value="" placeholder="Homepage" autocomplete="off" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*">
     </div>
     <div class="input">
         <input name="_csrf" value="{{csrfToken}}" type="hidden">

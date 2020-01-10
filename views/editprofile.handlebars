@@ -32,7 +32,7 @@
         <input type="text" name="city" value="{{city}}" placeholder="City" autocomplete="off">
     </div>
     <div class="input2">
-        <input type="url" name="url" value="{{url}}" placeholder="Homepage" autocomplete="off">
+        <input type="url" name="url" value="{{url}}" placeholder="Homepage" autocomplete="off" pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*">
     </div>
 
     <input name="_csrf" value="{{csrfToken}}" type="hidden">

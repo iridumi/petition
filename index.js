@@ -1,14 +1,5 @@
 const express = require("express");
-//const app = express();
 const app = (exports.app = express());
-//const { app } = require("./index"); in other module
-//const something = require("./auth-routes") // store in a var because it returns something. if it doesn't (this case) do this:
-//require("./auth-routes") // it should be lower down, where the routes used to be
-
-//const profileRouter = ()
-
-//app.use(profileRouter) // where the routes used to be
-//app.use("/profile", profileRouter); // only for urls that start with /profile. i have to change in the other file and remove /profile from the beginning cause it already knows that (router.post('/edit'))
 
 const hb = require("express-handlebars");
 const db = require("./db");
@@ -257,13 +248,8 @@ app.post("/petition", (req, res) => {
 });
 
 app.get("/thanks", (req, res) => {
-    // let sigCookieId = req.session.sigId;
-    // console.log("sigId from thanks: ", req.session.sigId);
     let userId = req.session.userId;
 
-    // if (!sigCookieId) {
-    //     res.redirect("/petition");
-    // } else {
     Promise.all([
         db.getNumber().then(numbers => {
             return numbers;
@@ -304,14 +290,6 @@ app.get("/signers", (req, res) => {
     }
 });
 
-// db.getSigners().then(({ rows }) => {
-//     if (req.session.userId) {
-//         res.render("signers", { rows });
-//     } else {
-//         res.redirect("login");
-//     }
-// });
-
 app.get("/signers/:city", (req, res) => {
     let { city } = req.params;
     if (req.session.userId) {
@@ -328,15 +306,6 @@ app.get("/signers/:city", (req, res) => {
         res.redirect("/login");
     }
 });
-
-//     db.getSignersCity(city)
-//         .then(({ rows }) => {
-//             res.render("signers", { rows });
-//         })
-//         .catch(err => {
-//             console.log(err);
-//         });
-// });
 
 app.get("/logout", (req, res) => {
     req.session = null;
@@ -358,70 +327,6 @@ app.post("/delete/account", (req, res) => {
         });
 });
 
-//===================== notes Friday 11.10 ===============================
-
-// app.use((req, res, next) {
-//     if (!req.session.userId && req.url !='/register' && req.url != '/login') {
-//         res.redirect('/register');
-//     } else {
-//         next();
-//     }
-// })
-//
-// function requireLoggedOutUser(req, res, next){ // route middleware on register
-//     if (req.session.userId) {
-//         res.redirect('/petition');
-//     } else {
-//         next()
-//     }
-// }
-//
-// function requireSigId(req, res, next){ // on thanks, signers and signers city
-//     if (!req.session.sigId) {
-//         res.redirect('/petition');
-//     } else {
-//         next()
-//     }
-// }
-//
-// function requireNoSigId(req, res, next){ // on
-//     if (req.session.sigId) {
-//         res.redirect('/thanks');
-//     } else {
-//         next()
-//     }
-// }
-//
-// app.get('/register', requireLoggedOutUser, (req, res) => {
-//     if (req.session.userId) {
-//         return res.redirect('/petition')
-//     }
-//     res.sendStatus(200)
-// })
-//
-//
-// dummy routes for demo
-// app.get("/welcome", (req, res) => {
-//     res.send("<h1>Welcome to my website!</>");
-// });
-//
-// app.post("welcome", (req, res) => {
-//     req.session.wasWelcomed = true;
-//     res.redirect("/home");
-// });
-//
-// app.get("/home", (req, res) => {
-//     if (!req.session.wasWelcomed) {
-//         return res.redirect("/welcome");
-//     }
-//     res.send("<h1>home</h1>");
-// });
-//
-// if (require.main === module) {
-//     app.listen(8080, () => console.log("listening!"));
-// }
-//=========================================
-//
 app.listen(process.env.PORT || 8080, () =>
     console.log("petition server is running")
 );

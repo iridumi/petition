@@ -1,6 +1,4 @@
-//(function signPetition() {
 let canvas = document.getElementById("canvas");
-//let submit = document.querySelector("#submit");
 let hidden = document.getElementById("hidden");
 let c = canvas.getContext("2d");
 let signing = false;
@@ -39,9 +37,3 @@ function draw(c, xInit, yInit, xFin, yFin) {
     c.closePath();
     hidden.value = canvas.toDataURL();
 }
-
-// submit.addEventListener("click", () => {
-//     hidden.value = canvas.toDataURL();
-//     //console.log(hidden.value);
-// });
-//})();
