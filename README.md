@@ -2,7 +2,7 @@
 
 Half-humorous, half-serious online petition, a one-week project done at SPICED Academy Berlin in October 2019. 
 
-
+![petition](https://github.com/iridumi/petition/blob/master/public/petition.gif)
 
 ## Technologies used
 
