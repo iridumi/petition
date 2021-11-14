@@ -13,7 +13,6 @@ JavaScript, Handlebars, Node.js, Express, PotsgreSQL, Canvas, CSS
 ## Features
 
 - Registration and login / logout
-- Registration information separated into required and optional
 - Adding and editing profile information
 - Adding and deleting signature
 - Seeing other supporters (full list or organized by location)
