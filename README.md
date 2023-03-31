@@ -28,7 +28,7 @@ JavaScript, Handlebars, Node.js, Express, PotsgreSQL, Canvas, CSS
 - Learning how to deploy a non-static website to Heroku
 
 
-
+## !!! The link is not functional anymore due to the recent Heroku changes
 ## Link
 
 https://coriander-pet.herokuapp.com/
