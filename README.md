@@ -1,6 +1,6 @@
 # Online Petition
 
-Half-humorous, half-serious online petition, a one-week project done at SPICED Academy Berlin in October 2019. 
+Part-humorous, part-serious online petition, a one-week project done at SPICED Academy Berlin in October 2019. 
 
 ![petition](https://github.com/iridumi/petition/blob/master/public/petition.gif)
 
@@ -29,7 +29,7 @@ JavaScript, Handlebars, Node.js, Express, PotsgreSQL, Canvas, CSS
 
 
 
-## !!! The below link is not functional anymore due to the recent Heroku changes
+## !!! The link below is not functional anymore due to the relatively recent Heroku changes
 ## Link
 
 https://coriander-pet.herokuapp.com/
